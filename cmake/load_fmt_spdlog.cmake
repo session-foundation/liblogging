@@ -1,6 +1,7 @@
-# This provides the fmt::fmt and spdlog::spdlog targets.  It's used by oxen-logging itself, but can
-# also be used by a parent project that skip add_directory(oxen-logging) (typically because the
-# parent is loading oxen-logging itself via system library instead of via submodule).
+# This provides the fmt::fmt and spdlog::spdlog targets.  It is used internally by both
+# CMakeLists.txt (when building liblogging) and cmake/load.cmake (when a parent project uses the
+# system-installed liblogging).  Parent projects should include cmake/load.cmake rather than this
+# file directly.
 
 if(NOT OXEN_LOGGING_FORCE_SUBMODULES)
     if(NOT TARGET fmt::fmt)
