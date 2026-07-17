@@ -1,3 +1,9 @@
+oxen-logging (1.2.0-2~deb14+1) forky; urgency=medium
+
+  * Rebuild
+
+ -- Jason Rhinelander <jason@session.foundation>  Fri, 17 Jul 2026 13:57:19 -0300
+
 oxen-logging (1.2.0-2~deb14) forky; urgency=medium
 
   * Add missing dependencies to liboxen-logging-dev package
