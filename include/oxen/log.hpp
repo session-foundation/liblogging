@@ -333,6 +333,15 @@ void add_sink(
 /// the above add_sink won't work.
 void add_sink(spdlog::sink_ptr, std::optional<std::string> pattern = std::nullopt);
 
+/// Removes a sink previously given to `add_sink`.  Removing a sink that is not currently added
+/// does nothing.
+///
+/// The master sink serialises this against logging, so once this returns the sink is neither
+/// running nor reachable: a caller that owns resources the sink's callback touches can free them
+/// afterwards.  Without this, a sink can only be dropped by `clear_sinks`, which takes every other
+/// sink with it.
+void remove_sink(spdlog::sink_ptr sink);
+
 /// Removes all existing log sinks, typically to replace the current log sink.  Note that until
 /// `add_sink` is called after this, logging output will not go anywhere.
 void clear_sinks();
