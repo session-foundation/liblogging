@@ -1,4 +1,4 @@
-local distro = 'resolute';
+local distro = 'stonking';
 local distro_name = 'Debian ' + distro;
 local distro_docker = 'registry.oxen.rocks/ubuntu-' + distro + '-builder';
 
