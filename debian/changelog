@@ -1,3 +1,9 @@
+oxen-logging (1.2.0-2~deb14+2) forky; urgency=medium
+
+  * Rebuild against current forky libraries
+
+ -- Jason Rhinelander <jason@session.foundation>  Tue, 13 Oct 2026 21:58:59 -0300
+
 oxen-logging (1.2.0-2~deb14+1) forky; urgency=medium
 
   * Rebuild
