@@ -164,6 +164,10 @@ void add_sink(Type type, std::string_view target, std::optional<std::string> pat
     add_sink(make_sink(type, target), std::move(pattern));
 }
 
+void remove_sink(spdlog::sink_ptr sink) {
+    master_sink->remove_sink(std::move(sink));
+}
+
 void clear_sinks() {
     master_sink->set_sinks({});
 }

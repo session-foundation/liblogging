@@ -35,7 +35,7 @@
 #include <iterator>
 #include <string_view>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 namespace oxen::log {
 
