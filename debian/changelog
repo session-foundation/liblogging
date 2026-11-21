@@ -1,3 +1,22 @@
+oxen-logging (1.3.0-1~deb14) forky; urgency=medium
+
+  [ Jason Rhinelander ]
+  * Bump fmt, spdlog to latest releases
+  * CI: bump clang versions; update distros
+  * Minor version bump
+  * Add better load cmake include
+  * bump version
+  * Include fmt/format.h for fmt::format in format.hpp
+  * latest fmt & spdlog
+  * CI: build binary-only, without an orig tarball
+  * Bump version to 1.3.0
+  * Require fmt 12 and spdlog 1.17 at build time and in -dev
+
+  [ Audric Ackermann ]
+  * Add remove_sink
+
+ -- Jason Rhinelander <jason@session.foundation>  Sat, 21 Nov 2026 17:56:08 -0400
+
 oxen-logging (1.2.0-2~deb14+2) forky; urgency=medium
 
   * Rebuild against current forky libraries
