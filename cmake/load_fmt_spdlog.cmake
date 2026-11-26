@@ -41,6 +41,37 @@ if(NOT TARGET fmt::fmt)
         set(OXEN_LOGGING_FMT_TARGET fmt::fmt-header-only)
     endif()
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../fmt)
+
+    # fmt 12.2.0 and 12.2.1 apply operator~ to their fallback 128-bit integer without defining it,
+    # so they do not compile where the compiler has no native 128-bit integer and long double is
+    # wider than 64 bits: of the targets we build for, 32-bit x86.  Upstream fixed it
+    # (fmtlib/fmt#4813) but has not released the fix, so there this supplies the operator to the
+    # code that needs it: fmt's own library source, or every consumer when fmt is header-only.
+    #
+    # Nothing else would say when this stops being wanted: it is only compiled for 32-bit x86, so
+    # a fixed fmt would break that build alone, with a redefinition error.  Hence the version check.
+    get_target_property(bundled_fmt_version fmt VERSION)
+    if(bundled_fmt_version VERSION_GREATER 12.2.1)
+        message(FATAL_ERROR
+            "The bundled fmt is now ${bundled_fmt_version}.  If it defines operator~ for "
+            "fmt::detail::uint128 (fmtlib/fmt#4813), remove this workaround and "
+            "cmake/fmt-uint128-not.hpp; if it does not, raise the version in this check.")
+    endif()
+
+    include(CheckCXXSourceCompiles)
+    check_cxx_source_compiles("
+        #include <cfloat>
+        #if defined(__SIZEOF_INT128__) || LDBL_MANT_DIG <= 53
+        #error fmt compiles as it is
+        #endif
+        int main() {}"
+        OXEN_LOGGING_FMT_LACKS_UINT128_NOT)
+    if(OXEN_LOGGING_FMT_LACKS_UINT128_NOT)
+        set(fmt_missing_operator
+            "$<$<COMPILE_LANGUAGE:CXX>:SHELL:-include \"${CMAKE_CURRENT_LIST_DIR}/fmt-uint128-not.hpp\">")
+        target_compile_options(fmt PRIVATE "${fmt_missing_operator}")
+        target_compile_options(fmt-header-only INTERFACE "${fmt_missing_operator}")
+    endif()
 endif()
 
 if(NOT TARGET spdlog::spdlog)
